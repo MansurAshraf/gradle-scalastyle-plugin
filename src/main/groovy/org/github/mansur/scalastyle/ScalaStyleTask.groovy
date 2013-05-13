@@ -15,6 +15,8 @@
 
 
 
+
+
 package org.github.mansur.scalastyle
 
 import org.apache.commons.lang.time.StopWatch
@@ -32,17 +34,16 @@ import org.scalastyle.XmlOutput
  */
 class ScalaStyleTask extends SourceTask {
     File buildDirectory
-    File baseDirectory
     String configLocation
     String outputFile
-    String outputEncoding
-    Boolean failOnViolation
-    Boolean failOnWarning
-    Boolean skip
-    Boolean verbose
-    Boolean quiet
-    Boolean includeTestSourceDirectory
-    String inputEncoding
+    String outputEncoding="UTF-8"
+    Boolean failOnViolation=true
+    Boolean failOnWarning=false
+    Boolean skip=false
+    Boolean verbose=false
+    Boolean quiet=true
+    Boolean includeTestSourceDirectory=false
+    String inputEncoding="UTF-8"
     StopWatch s = new StopWatch()
     ScalaStyleUtils scalaStyleUtils = new ScalaStyleUtils()
     String testSource
@@ -59,6 +60,12 @@ class ScalaStyleTask extends SourceTask {
         extractAndValidateProperties()
         try {
             if (!skip) {
+
+                if (includeTestSourceDirectory && testSource == null) {
+                    testSourceDir = project.fileTree(project.projectDir.absolutePath + "/src/test/scala")
+                } else {
+                    testSourceDir = project.fileTree(project.projectDir.absolutePath + "/" + testSource)
+                }
                 s.start()
                 def configuration = ScalastyleConfiguration.readFromXml(configLocation)
                 def fileToProcess = scalaStyleUtils.getFilesToProcess(source.getFiles().toList(), testSourceDir.getFiles().toList(), inputEncoding, includeTestSourceDirectory)
@@ -100,23 +107,7 @@ class ScalaStyleTask extends SourceTask {
 
 
     private void extractAndValidateProperties() {
-        configLocation = project.scalaStyle.configLocation
-        outputFile = project.scalaStyle.outputFile
 
-        def resolvedBuildDir = project.scalaStyle.buildDirectory == null ? project.buildDir.absolutePath : project.scalaStyle.buildDirectory
-        buildDirectory = project.file(resolvedBuildDir)
-
-        def resolvedBaseDir = project.scalaStyle.baseDirectory == null ? project.projectDir.absolutePath : project.scalaStyle.baseDirectory
-        baseDirectory = project.file(resolvedBaseDir)
-
-        outputEncoding = project.scalaStyle.outputEncoding
-        failOnViolation = project.scalaStyle.failOnViolation
-        failOnWarning = project.scalaStyle.failOnWarning
-        skip = project.scalaStyle.skip
-        verbose = project.scalaStyle.verbose
-        quiet = project.scalaStyle.quiet
-        includeTestSourceDirectory = project.scalaStyle.includeTestSourceDirectory
-        inputEncoding = project.scalaStyle.inputEncoding
 
         if (configLocation == null) {
             throw new Exception("no Scala Style configuration file is provided")
@@ -136,8 +127,9 @@ class ScalaStyleTask extends SourceTask {
             throw new Exception("configLocation " + configLocation + " does not exist")
         }
 
-        if (outputEncoding == null) {
-            outputEncoding = "UTF-8"
+
+        if (buildDirectory==null){
+            buildDirectory=project.buildDir
         }
 
         if (outputFile == null) {
@@ -147,10 +139,6 @@ class ScalaStyleTask extends SourceTask {
         if (!skip && !project.file(outputFile).exists()) {
             project.file(outputFile).getParentFile().mkdirs()
             project.file(outputFile).createNewFile()
-        }
-
-        if (inputEncoding == null) {
-            inputEncoding = "UTF-8"
         }
 
         if (verbose) {
