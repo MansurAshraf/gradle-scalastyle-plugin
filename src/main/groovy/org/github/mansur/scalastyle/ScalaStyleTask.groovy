@@ -17,6 +17,8 @@
 
 
 
+
+
 package org.github.mansur.scalastyle
 
 import org.apache.commons.lang.time.StopWatch
@@ -60,12 +62,6 @@ class ScalaStyleTask extends SourceTask {
         extractAndValidateProperties()
         try {
             if (!skip) {
-
-                if (includeTestSourceDirectory && testSource == null) {
-                    testSourceDir = project.fileTree(project.projectDir.absolutePath + "/src/test/scala")
-                } else {
-                    testSourceDir = project.fileTree(project.projectDir.absolutePath + "/" + testSource)
-                }
                 s.start()
                 def configuration = ScalastyleConfiguration.readFromXml(configLocation)
                 def fileToProcess = scalaStyleUtils.getFilesToProcess(source.getFiles().toList(), testSourceDir.getFiles().toList(), inputEncoding, includeTestSourceDirectory)
