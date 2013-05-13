@@ -43,6 +43,7 @@ Thumbs.db
 *.ipr
 *.iws
 .idea/
+out/
 
 # Gradle generate files #
 #########################
