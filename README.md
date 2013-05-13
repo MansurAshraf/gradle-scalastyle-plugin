@@ -28,13 +28,13 @@ Configure the plugin
 Other optional properties are
 
 ```groovy
-        outputFile  #Default => $buildDir/scala_style_result.xml
-        outputEncoding #Default => UTF-8
-        failOnViolation #Default => true
-        failOnWarning #Default => false
-        skip  #Default => false
-        verbose #Default => false
-        quiet #Default => false
-        includeTestSourceDirectory #Default => false
-        inputEncoding #Default => UTF-8
+        outputFile  //Default => $buildDir/scala_style_result.xml
+        outputEncoding //Default => UTF-8
+        failOnViolation //Default => true
+        failOnWarning //Default => false
+        skip  //Default => false
+        verbose //Default => false
+        quiet //Default => false
+        includeTestSourceDirectory //Default => false
+        inputEncoding //Default => UTF-8
 ```
