@@ -20,9 +20,10 @@ Configure the plugin
   scalaStyle {
       configLocation = "/path/to/scalaStye.xml"
       includeTestSourceDirectory = true
+      source = "src/main/scala"
+      testSource = "src/test/scala"
   }
-  scalaStyleTask.source = "src/main/scala"
-  scalaStyleTask.testSource = "src/test/scala"
+
 ```
 
 Other optional properties are
