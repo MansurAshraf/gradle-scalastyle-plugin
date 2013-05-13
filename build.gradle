@@ -15,11 +15,14 @@
 
 
 
+
+
 apply plugin: "java"
 apply plugin: "scala"
 apply plugin: "groovy"
 
 version = '0.1'
+group= "org.github.mansur.scalastyle"
 
 repositories {
     mavenCentral()
