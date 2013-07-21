@@ -21,7 +21,7 @@ apply plugin: "java"
 apply plugin: "scala"
 apply plugin: "groovy"
 
-version = '0.1'
+version = '0.2'
 group= "org.github.mansur.scalastyle"
 
 repositories {
@@ -30,7 +30,7 @@ repositories {
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'org.scalastyle:scalastyle_2.9.2:0.2.0'
+    compile 'org.scalastyle:scalastyle_2.9.2:0.3.2'
     compile 'org.scala-lang:scala-library:2.9.2'
     testCompile 'junit:junit:4.11'
 
