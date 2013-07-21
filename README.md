@@ -10,8 +10,8 @@ Add following dependencies to your buildScript
 
 ```groovy
      classpath "org.scala-lang:scala-library:2.9.2"
-     classpath "org.github.mansur.scalastyle:gradle-scalastyle-plugin_2.9.2:0.1"
-     classpath "org.scalastyle:scalastyle_2.9.2:0.2.0"
+     classpath "org.github.mansur.scalastyle:gradle-scalastyle-plugin_2.9.2:0.2"
+     classpath "org.scalastyle:scalastyle_2.9.2:0.3.2"
 ```
 
 Configure the plugin
