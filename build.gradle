@@ -13,13 +13,11 @@
  *    limitations under the License.
  */
 
-
-
-
-
 apply plugin: "java"
 apply plugin: "scala"
 apply plugin: "groovy"
+apply plugin: "maven"
+apply plugin: 'signing' // For pushing to Sonatype OSS Staging repository
 
 version = '0.2'
 group= "org.github.mansur.scalastyle"
@@ -27,13 +25,81 @@ group= "org.github.mansur.scalastyle"
 repositories {
     mavenCentral()
 }
+
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'org.scalastyle:scalastyle_2.9.2:0.3.2'
-    compile 'org.scala-lang:scala-library:2.9.2'
+    compile 'org.scalastyle:scalastyle_2.10:0.3.2'
+    compile 'org.scala-lang:scala-library:2.10.2'
     testCompile 'junit:junit:4.11'
-
 }
 
 compileGroovy.dependsOn(compileScala)
+
+// Required for Sonatype
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+// Required for Sonatype
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+// Required for Sonatype
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+// Required for Sonatype
+//signing {
+//    sign configurations.archives
+//}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+//              authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+               name 'gradle-scalastyle'
+               packaging 'jar'
+               description 'gradle-scalastyle is a Gradle plugin for running the Scalastyle style checker'
+               url 'https://github.com/MuhammadAshraf/gradle-scalastyle-plugin'
+
+               scm {
+                   url 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
+                   connection 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
+                   developerConnection 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
+               }
+
+               licenses {
+                   license {
+                       name 'The Apache Software License, Version 2.0'
+                       url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                       distribution 'repo'
+                   }
+               }
+
+               developers {
+                   developer {
+                       id 'MuhammadAshraf'
+                       name 'Muhammad Ashraf'
+                   }
+                   developer {
+                       id 'psfblair'
+                       name 'Paul Blair'
+                   }
+               }
+           }
+        }
+    }
+}
