@@ -22,11 +22,26 @@ apply plugin: "maven"
 apply plugin: 'signing' // For pushing to Sonatype OSS Staging repository
 
 version = '0.2'
-group= "org.github.mansur.scalastyle"
+group = "org.github.mansur.scalastyle"
 
 repositories {
     mavenCentral()
 }
+
+
+configurations {
+    deployerJars
+}
+
+
+ext {
+    cloudbees = [:]
+}
+cloudbees += [
+        user_name: "$System.env.cb_username",
+        password: "$System.env.cb_password"
+]
+
 
 dependencies {
     compile gradleApi()
@@ -34,28 +49,42 @@ dependencies {
     compile 'org.scalastyle:scalastyle_2.9.2:0.2.0'
     compile 'org.scala-lang:scala-library:2.9.2'
     testCompile 'junit:junit:4.11'
+    deployerJars 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
+
 }
 
 compileGroovy.dependsOn(compileScala)
 
 // Required for Sonatype
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from 'build/docs/javadoc'
-}
-
-// Required for Sonatype
-task sourcesJar(type: Jar) {
+task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
-    classifier = 'sources'
+    classifier "sources"
+    extension "jar"
 }
 
-// Required for Sonatype
-artifacts {
-    archives jar
-    archives javadocJar
-    archives sourcesJar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier "javadoc"
+    extension "jar"
 }
+
+configurations.create("sources")
+configurations.create("javadoc")
+configurations.archives {
+    extendsFrom configurations.sources
+    extendsFrom configurations.javadoc
+}
+
+artifacts {
+    sources(sourcesJar) {
+        type "jar"
+    }
+    javadoc(javadocJar) {
+        type "javadoc"
+    }
+}
+
+javadoc.doFirst { println "" }
 
 // Required for Sonatype
 //signing {
@@ -64,44 +93,48 @@ artifacts {
 
 uploadArchives {
     repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-//              authentication(userName: sonatypeUsername, password: sonatypePassword)
+
+        repositories.mavenDeployer {
+            def configureAuth = {
+                authentication(userName: cloudbees.user_name, password: cloudbees.password)
             }
+            configuration = configurations.deployerJars
+            repository(url: "dav:https://repository-uncommon-configuration.forge.cloudbees.com/release/", configureAuth)
+            snapshotRepository(url: "dav:https://repository-uncommon-configuration.forge.cloudbees.com/snapshot/", configureAuth)
+
 
             pom.project {
-               name 'gradle-scalastyle'
-               packaging 'jar'
-               description 'gradle-scalastyle is a Gradle plugin for running the Scalastyle style checker'
-               url 'https://github.com/MuhammadAshraf/gradle-scalastyle-plugin'
+                name 'gradle-scalastyle'
+                packaging 'jar'
+                description 'gradle-scalastyle is a Gradle plugin for running the Scalastyle style checker'
+                url 'https://github.com/MuhammadAshraf/gradle-scalastyle-plugin'
 
-               scm {
-                   url 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
-                   connection 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
-                   developerConnection 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
-               }
+                scm {
+                    url 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
+                    connection 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
+                    developerConnection 'git@github.com:MuhammadAshraf/gradle-scalastyle-plugin.git'
+                }
 
-               licenses {
-                   license {
-                       name 'The Apache Software License, Version 2.0'
-                       url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                       distribution 'repo'
-                   }
-               }
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
 
-               developers {
-                   developer {
-                       id 'MuhammadAshraf'
-                       name 'Muhammad Ashraf'
-                   }
-                   developer {
-                       id 'psfblair'
-                       name 'Paul Blair'
-                   }
-               }
-           }
+                developers {
+                    developer {
+                        id 'MuhammadAshraf'
+                        name 'Muhammad Ashraf'
+                    }
+                    developer {
+                        id 'psfblair'
+                        name 'Paul Blair'
+                    }
+                }
+            }
         }
     }
 }
