@@ -4,7 +4,7 @@
 
 ```
 maven repo: http://repository-uncommon-configuration.forge.cloudbees.com/release/
-groupId: org.github.mansur.oozie
+groupId: org.github.mansur.scalastyle
 artifactId: gradle-scalastyle-plugin_2.9.2 OR gradle-scalastyle-plugin_2.10
 version: 0.2
 ```
