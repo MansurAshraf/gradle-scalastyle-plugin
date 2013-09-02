@@ -15,13 +15,15 @@
 
 
 
+
+
 apply plugin: "java"
 apply plugin: "scala"
 apply plugin: "groovy"
 apply plugin: "maven"
 apply plugin: 'signing' // For pushing to Sonatype OSS Staging repository
 
-version = '0.2'
+version = '0.3'
 group = "org.github.mansur.scalastyle"
 
 repositories {
