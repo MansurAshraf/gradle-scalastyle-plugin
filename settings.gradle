@@ -17,4 +17,6 @@
 
 
 
-rootProject.name = 'gradle-scalastyle-plugin_2.9.2'
+
+
+rootProject.name = 'gradle-scalastyle-plugin_2.10'
