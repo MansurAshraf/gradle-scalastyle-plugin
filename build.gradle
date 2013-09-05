@@ -19,6 +19,8 @@
 
 
 
+
+
 apply plugin: "java"
 apply plugin: "scala"
 apply plugin: "groovy"
@@ -50,7 +52,7 @@ cloudbees += [
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'org.scalastyle:scalastyle_2.10:0.2.0'
+    compile 'org.scalastyle:scalastyle_2.10:0.3.2'
     compile 'org.scala-lang:scala-library:2.10'
     testCompile 'junit:junit:4.11'
     deployerJars 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
