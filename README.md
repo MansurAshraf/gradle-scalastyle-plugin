@@ -60,6 +60,7 @@ Other optional properties are
       classpath 'org.github.mansur.scalastyle:gradle-scalastyle-plugin_2.10:0.3'
       classpath 'org.scalastyle:scalastyle_2.10:0.3.2'
       classpath 'commons-lang:commons-lang:2.6'
+      classpath 'org.scalariform:scalariform_2.10:0.1.4'
     }
   }
 ```
