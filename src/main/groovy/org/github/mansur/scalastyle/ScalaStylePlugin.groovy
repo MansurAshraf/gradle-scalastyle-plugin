@@ -30,7 +30,7 @@ class ScalaStylePlugin implements Plugin<Project> {
 
 
     void apply(Project project) {
-        project.configurations.add("scalaStyle")
+        project.configurations.create("scalaStyle")
                 .setVisible(false)
                 .setTransitive(true)
                 .setDescription('Scala Style libraries to be used for this project.')
