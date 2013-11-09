@@ -62,12 +62,12 @@ Other optional properties are
       classpath 'commons-lang:commons-lang:2.6'
       classpath 'org.scalariform:scalariform_2.10:0.1.4'
     }
-  }
   
   scalaStyle {
   configLocation = "mega-project/sub-project/scalastyle_config.xml"
   includeTestSourceDirectory = true
   source = "src/main/scala"
   testSource = "src/test/scala"
+}
 }
 ```
