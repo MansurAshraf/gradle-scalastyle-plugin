@@ -12,16 +12,8 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
-
-
-
-
-
-
 package org.github.mansur.scalastyle
 
-import org.apache.commons.lang.time.StopWatch
 import org.gradle.api.file.FileTree
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
@@ -38,15 +30,14 @@ class ScalaStyleTask extends SourceTask {
     File buildDirectory
     String configLocation
     String outputFile
-    String outputEncoding="UTF-8"
-    Boolean failOnViolation=true
-    Boolean failOnWarning=false
-    Boolean skip=false
-    Boolean verbose=false
-    Boolean quiet=true
-    Boolean includeTestSourceDirectory=false
-    String inputEncoding="UTF-8"
-    StopWatch s = new StopWatch()
+    String outputEncoding = "UTF-8"
+    Boolean failOnViolation = true
+    Boolean failOnWarning = false
+    Boolean skip = false
+    Boolean verbose = false
+    Boolean quiet = true
+    Boolean includeTestSourceDirectory = false
+    String inputEncoding = "UTF-8"
     ScalaStyleUtils scalaStyleUtils = new ScalaStyleUtils()
     String testSource
     FileTree testSourceDir
@@ -54,38 +45,39 @@ class ScalaStyleTask extends SourceTask {
     ScalaStyleTask() {
         super()
         setDescription("Scalastyle examines your Scala code and indicates potential problems with it.")
-
     }
 
     @TaskAction
     def scalaStyle() {
         extractAndValidateProperties()
-        try {
-            if (!skip) {
-                s.start()
+        if (!skip) {
+            try {
+                def startMs = System.currentTimeMillis()
                 def configuration = ScalastyleConfiguration.readFromXml(configLocation)
                 def fileToProcess = scalaStyleUtils.getFilesToProcess(source.getFiles().toList(), testSourceDir.getFiles().toList(), inputEncoding, includeTestSourceDirectory)
                 def messages = new ScalastyleChecker().checkFiles(configuration, fileToProcess)
                 def outputResult = new TextOutput(verbose, quiet).output(messages)
-                println("Saving to outputFile=" + project.file(outputFile).getCanonicalPath());
+
+                getLogger().debug("Saving to outputFile={}", project.file(outputFile).getCanonicalPath());
                 XmlOutput.save(outputFile, outputEncoding, messages)
-                s.stop()
-                if (!quiet) println("Processed " + outputResult.files() + " file(s)")
-                if (!quiet) println("Found " + outputResult.errors() + " errors")
-                if (!quiet) println("Found " + outputResult.warnings() + " warnings")
-                if (!quiet) println("Finished in " + s.toString() + " ms")
+
+                def stopMs = System.currentTimeMillis()
+                if (!quiet) {
+                    getLogger().info("Processed {} file(s)", outputResult.files())
+                    getLogger().info("Found {} warnings", outputResult.warnings())
+                    getLogger().info("Found {} errors", outputResult.errors())
+                    getLogger().info("Finished in {} ms", stopMs - startMs)
+                }
 
                 def violations = outputResult.errors() + ((failOnWarning) ? outputResult.warnings() : 0)
 
                 processViolations(violations)
-            } else {
-                getLogger().info("Skipping Scala Style")
+            } catch (Exception e) {
+                throw new Exception("Scala check error", e)
             }
-
-        } catch (Exception e) {
-            throw new Exception("Scala check error", e)
+        } else {
+            getLogger().info("Skipping Scalastyle")
         }
-
     }
 
     private void processViolations(int violations) {
@@ -100,17 +92,13 @@ class ScalaStyleTask extends SourceTask {
         }
     }
 
-
-
     private void extractAndValidateProperties() {
-
-
         if (configLocation == null) {
-            throw new Exception("no Scala Style configuration file is provided")
+            throw new Exception("No Scalastyle configuration file provided")
         }
 
         if (source == null) {
-            throw new Exception("Specify Scala Source set")
+            throw new Exception("Specify Scala source set")
         }
 
         if (includeTestSourceDirectory && testSource == null) {
@@ -124,8 +112,8 @@ class ScalaStyleTask extends SourceTask {
         }
 
 
-        if (buildDirectory==null){
-            buildDirectory=project.buildDir
+        if (buildDirectory == null) {
+            buildDirectory = project.buildDir
         }
 
         if (outputFile == null) {
@@ -138,18 +126,17 @@ class ScalaStyleTask extends SourceTask {
         }
 
         if (verbose) {
-            println("configLocation: " + configLocation)
-            println("buildDirectory: " + buildDirectory)
-            println("outputFile: " + outputFile)
-            println("outputEncoding: " + outputEncoding)
-            println("failOnViolation: " + failOnViolation)
-            println("failOnWarning: " + failOnWarning)
-            println("verbose: " + verbose)
-            println("quiet: " + quiet)
-            println("skip: " + skip)
-            println("includeTestSourceDirectory: " + includeTestSourceDirectory)
-            println("inputEncoding: " + inputEncoding)
+            getLogger().info("configLocation: {}", configLocation)
+            getLogger().info("buildDirectory: {}", buildDirectory)
+            getLogger().info("outputFile: {}", outputFile)
+            getLogger().info("outputEncoding: {}", outputEncoding)
+            getLogger().info("failOnViolation: {}", failOnViolation)
+            getLogger().info("failOnWarning: {}", failOnWarning)
+            getLogger().info("verbose: {}", verbose)
+            getLogger().info("quiet: {}", quiet)
+            getLogger().info("skip: {}", skip)
+            getLogger().info("includeTestSourceDirectory: {}", includeTestSourceDirectory)
+            getLogger().info("inputEncoding: {}", inputEncoding)
         }
     }
-
 }
