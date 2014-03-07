@@ -12,15 +12,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
-
-
-
-
-
-
-
-
 apply plugin: "java"
 apply plugin: "scala"
 apply plugin: "groovy"
@@ -54,6 +45,7 @@ dependencies {
     compile localGroovy()
     compile 'org.scalastyle:scalastyle_2.10:0.3.2'
     compile 'org.scala-lang:scala-library:2.10'
+    compile 'commons-lang:commons-lang:2.6'
     testCompile 'junit:junit:4.11'
     deployerJars 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
 
