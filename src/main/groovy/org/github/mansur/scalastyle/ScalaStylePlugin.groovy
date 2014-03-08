@@ -12,11 +12,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
-
-
-
-
 package org.github.mansur.scalastyle
 
 import org.gradle.api.Plugin
@@ -27,8 +22,6 @@ import org.gradle.api.Project
  * @since 5/11/13
  */
 class ScalaStylePlugin implements Plugin<Project> {
-
-
     void apply(Project project) {
         project.configurations.create("scalaStyle")
                 .setVisible(false)
@@ -38,5 +31,4 @@ class ScalaStylePlugin implements Plugin<Project> {
         project.task(type: ScalaStyleTask, 'scalaStyle')
         project.tasks.scalaStyle.outputs.upToDateWhen { false }
     }
-
 }
