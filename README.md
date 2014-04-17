@@ -3,10 +3,10 @@
 ### Instructions
 
 ```
-maven repo: http://repository-uncommon-configuration.forge.cloudbees.com/release/
+maven repo: http://dl.bintray.com/releashaus/release
 groupId: org.github.mansur.scalastyle
-artifactId: gradle-scalastyle-plugin_2.9.2 OR gradle-scalastyle-plugin_2.10
-version: 0.3
+artifactId:  gradle-scalastyle-plugin_2.10
+version: 0.4.1
 ```
 
 ```groovy
@@ -49,25 +49,29 @@ Other optional properties are
 
 #### Full Buildscript Example
 ```groovy
-  buildscript {
-    repositories {
-      mavenLocal()
-      mavenCentral()
-      maven { url "http://repository-uncommon-configuration.forge.cloudbees.com/release" }
-    }
-    dependencies {
-      classpath 'org.scala-lang:scala-library:2.10'
-      classpath 'org.github.mansur.scalastyle:gradle-scalastyle-plugin_2.10:0.3'
-      classpath 'org.scalastyle:scalastyle_2.10:0.3.2'
-      classpath 'commons-lang:commons-lang:2.6'
-      classpath 'org.scalariform:scalariform_2.10:0.1.4'
-    }
-  
-  scalaStyle {
+apply plugin: 'scalaStyle'
+
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repository-uncommon-configuration.forge.cloudbees.com/release" }
+  }
+
+  dependencies {
+    classpath 'org.scala-lang:scala-library:2.10'
+    classpath 'org.github.mansur.scalastyle:gradle-scalastyle-plugin_2.10:0.3'
+    classpath 'org.scalastyle:scalastyle_2.10:0.3.2'
+    classpath 'commons-lang:commons-lang:2.6'
+    classpath 'org.scalariform:scalariform_2.10:0.1.4'
+  }
+
+}
+
+scalaStyle {
   configLocation = "mega-project/sub-project/scalastyle_config.xml"
   includeTestSourceDirectory = true
   source = "src/main/scala"
   testSource = "src/test/scala"
-}
 }
 ```
