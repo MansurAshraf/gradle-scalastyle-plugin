@@ -55,7 +55,7 @@ buildscript {
   repositories {
     mavenLocal()
     mavenCentral()
-    maven { url "http://repository-uncommon-configuration.forge.cloudbees.com/release" }
+    maven { url "http://dl.bintray.com/releashaus/release" }
   }
 
   dependencies {
