@@ -19,7 +19,7 @@ apply plugin: 'signing' // For pushing to Sonatype OSS Staging repository
 apply plugin: 'bintray'
 apply plugin: 'maven-publish'
 
-version = '0.4.0'
+version = '0.4.1'
 group = "org.github.mansur.scalastyle"
 
 buildscript {
@@ -101,7 +101,7 @@ bintray {
         name = 'gradle-scalastyle-plugin'
         desc = 'gradle-scalastyle is a Gradle plugin for running the Scalastyle style checker.'
         licenses = ['Apache-2.0']
-        labels = ['v4.0']
+        labels = ['v4.1']
     }
 }
 
