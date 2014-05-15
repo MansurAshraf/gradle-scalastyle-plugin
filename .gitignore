@@ -70,3 +70,5 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+
+!gradle/wrapper/gradle-wrapper.jar
