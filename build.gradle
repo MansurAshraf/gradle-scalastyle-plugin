@@ -91,9 +91,9 @@ publishing {
     }
 }
 
-bintray {
-    user = project.user
-    key = project.key
+bintray {        
+    user = project.hasProperty('user') ? project.user : ''
+    key = project.hasProperty('key') ? project.key : ''
     publications = ['mavenJava']
     pkg {
         repo = 'release'
