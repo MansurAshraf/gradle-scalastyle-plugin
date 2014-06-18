@@ -22,6 +22,11 @@ apply plugin: 'maven-publish'
 version = '0.4.1'
 group = "org.github.mansur.scalastyle"
 
+dependencies {
+    runtime "org.scalastyle:scalastyle_2.10:0.4.0"
+    runtime "org.scala-lang:scala-library:2.10"
+}
+
 buildscript {
     repositories {
         jcenter()
