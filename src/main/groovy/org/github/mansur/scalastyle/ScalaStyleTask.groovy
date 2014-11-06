@@ -21,6 +21,8 @@ import org.scalastyle.ScalastyleChecker
 import org.scalastyle.ScalastyleConfiguration
 import org.scalastyle.TextOutput
 import org.scalastyle.XmlOutput
+import com.typesafe.config.ConfigFactory
+import com.typesafe.config.Config
 
 /**
  * @author Muhammad Ashraf
@@ -56,10 +58,12 @@ class ScalaStyleTask extends SourceTask {
                 def configuration = ScalastyleConfiguration.readFromXml(configLocation)
                 def fileToProcess = scalaStyleUtils.getFilesToProcess(source.getFiles().toList(), testSourceDir.getFiles().toList(), inputEncoding, includeTestSourceDirectory)
                 def messages = new ScalastyleChecker().checkFiles(configuration, fileToProcess)
-                def outputResult = new TextOutput(verbose, quiet).output(messages)
+                def config = ConfigFactory.load().copy()
+
+                def outputResult = new TextOutput(config, verbose, quiet).output(messages)
 
                 getLogger().debug("Saving to outputFile={}", project.file(outputFile).getCanonicalPath());
-                XmlOutput.save(outputFile, outputEncoding, messages)
+                XmlOutput.save(config, outputFile, outputEncoding, messages)
 
                 def stopMs = System.currentTimeMillis()
                 if (!quiet) {
