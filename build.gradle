@@ -19,11 +19,11 @@ apply plugin: 'signing' // For pushing to Sonatype OSS Staging repository
 apply plugin: 'bintray'
 apply plugin: 'maven-publish'
 
-version = '0.4.1'
+version = '0.5.0'
 group = "org.github.mansur.scalastyle"
 
 dependencies {
-    runtime "org.scalastyle:scalastyle_2.10:0.4.0"
+    runtime "org.scalastyle:scalastyle_2.10:0.6.0"
     runtime "org.scala-lang:scala-library:2.10"
 }
 
@@ -44,7 +44,7 @@ repositories {
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'org.scalastyle:scalastyle_2.10:0.4.0'
+    compile 'org.scalastyle:scalastyle_2.10:0.6.0'
     compile 'org.scala-lang:scala-library:2.10'
     testCompile 'junit:junit:4.11'
 }
