@@ -22,7 +22,7 @@ apply plugin: 'signing' // For pushing to Sonatype OSS Staging repository
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
-version = '0.5.1'
+version = '0.6.0'
 group = "org.github.ngbinh.scalastyle"
 
 ext {
@@ -31,11 +31,12 @@ ext {
 
 versions.scalaDist = "2.11"
 versions.scalaStyle = "0.6.0"
+versions.scala = "2.11.4"
 versions.junit = "4.11"
 
 dependencies {
     runtime "org.scalastyle:scalastyle_${versions.scalaDist}:${versions.scalaStyle}"
-    runtime "org.scala-lang:scala-library:_${versions.scalaDist}"
+    runtime "org.scala-lang:scala-library:${versions.scala}"
 }
 
 buildscript {
@@ -57,7 +58,7 @@ dependencies {
     compile localGroovy()
 
     compile "org.scalastyle:scalastyle_${versions.scalaDist}:${versions.scalaStyle}"
-    compile "org.scala-lang:scala-library:_${versions.scalaDist}"
+    compile "org.scala-lang:scala-library:${versions.scala}"
     testCompile 'junit:junit:${versions.junit}'
 }
 
@@ -118,6 +119,12 @@ bintray {
         desc = 'gradle-scalastyle is a Gradle plugin for running the Scalastyle style checker.'
         licenses = ['Apache-2.0']
         labels = [version]
+        desc = 'Gradle plugin for scalaStyle'
+        websiteUrl = 'https://github.com/ngbinh/gradle-scalastyle-plugin'
+        issueTrackerUrl = 'https://github.com/ngbinh/gradle-scalastyle-plugin/issues'
+        vcsUrl = 'https://github.com/ngbinh/gradle-scalastyle-plugin.git'
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
     }
 }
 

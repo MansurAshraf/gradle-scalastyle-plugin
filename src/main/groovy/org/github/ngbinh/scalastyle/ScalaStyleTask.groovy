@@ -42,8 +42,8 @@ class ScalaStyleTask extends SourceTask {
     Boolean failOnWarning = false
     Boolean skip = false
     Boolean verbose = false
-    Boolean quiet = true
-    Boolean includeTestSourceDirectory = false
+    Boolean quiet = false
+    Boolean includeTestSourceDirectory = true
     String inputEncoding = "UTF-8"
     ScalaStyleUtils scalaStyleUtils = new ScalaStyleUtils()
     String testSource
@@ -63,19 +63,21 @@ class ScalaStyleTask extends SourceTask {
                 def configuration = ScalastyleConfiguration.readFromXml(configLocation)
                 def fileToProcess = scalaStyleUtils.getFilesToProcess(source.getFiles().toList(), testSourceDir.getFiles().toList(), inputEncoding, includeTestSourceDirectory)
                 def messages = new ScalastyleChecker().checkFiles(configuration, fileToProcess)
-                def config = ConfigFactory.load().copy()
+                def config = ConfigFactory.load()
 
                 def outputResult = new TextOutput(config, verbose, quiet).output(messages)
 
-                getLogger().debug("Saving to outputFile={}", project.file(outputFile).getCanonicalPath());
+                outputResult.println()
+
+                project.getLogger().debug("Saving to outputFile={}", project.file(outputFile).getCanonicalPath());
                 XmlOutput.save(config, outputFile, outputEncoding, messages)
 
                 def stopMs = System.currentTimeMillis()
                 if (!quiet) {
-                    getLogger().info("Processed {} file(s)", outputResult.files())
-                    getLogger().info("Found {} warnings", outputResult.warnings())
-                    getLogger().info("Found {} errors", outputResult.errors())
-                    getLogger().info("Finished in {} ms", stopMs - startMs)
+                    project.getLogger().info("Processed {} file(s)", outputResult.files())
+                    project.getLogger().warn("Found {} warnings", outputResult.warnings())
+                    project.getLogger().error("Found {} errors", outputResult.errors())
+                    project.getLogger().info("Finished in {} ms", stopMs - startMs)
                 }
 
                 def violations = outputResult.errors() + ((failOnWarning) ? outputResult.warnings() : 0)
@@ -85,7 +87,7 @@ class ScalaStyleTask extends SourceTask {
                 throw new Exception("Scala check error", e)
             }
         } else {
-            getLogger().info("Skipping Scalastyle")
+            project.getLogger().info("Skipping Scalastyle")
         }
     }
 
@@ -120,7 +122,6 @@ class ScalaStyleTask extends SourceTask {
             throw new Exception("configLocation " + configLocation + " does not exist")
         }
 
-
         if (buildDirectory == null) {
             buildDirectory = project.buildDir
         }
@@ -135,17 +136,17 @@ class ScalaStyleTask extends SourceTask {
         }
 
         if (verbose) {
-            getLogger().info("configLocation: {}", configLocation)
-            getLogger().info("buildDirectory: {}", buildDirectory)
-            getLogger().info("outputFile: {}", outputFile)
-            getLogger().info("outputEncoding: {}", outputEncoding)
-            getLogger().info("failOnViolation: {}", failOnViolation)
-            getLogger().info("failOnWarning: {}", failOnWarning)
-            getLogger().info("verbose: {}", verbose)
-            getLogger().info("quiet: {}", quiet)
-            getLogger().info("skip: {}", skip)
-            getLogger().info("includeTestSourceDirectory: {}", includeTestSourceDirectory)
-            getLogger().info("inputEncoding: {}", inputEncoding)
+            project.getLogger().info("configLocation: {}", configLocation)
+            project.getLogger().info("buildDirectory: {}", buildDirectory)
+            project.getLogger().info("outputFile: {}", outputFile)
+            project.getLogger().info("outputEncoding: {}", outputEncoding)
+            project.getLogger().info("failOnViolation: {}", failOnViolation)
+            project.getLogger().info("failOnWarning: {}", failOnWarning)
+            project.getLogger().info("verbose: {}", verbose)
+            project.getLogger().info("quiet: {}", quiet)
+            project.getLogger().info("skip: {}", skip)
+            project.getLogger().info("includeTestSourceDirectory: {}", includeTestSourceDirectory)
+            project.getLogger().info("inputEncoding: {}", inputEncoding)
         }
     }
 }
