@@ -1,5 +1,10 @@
 # Scala Style Gradle Plugin
 
+### IMPORTANT
+This project is not actively maintained on anymore. Go to
+ https://github.com/ngbinh/gradle-scalastyle-plugin for Gradle Scala Style plugin
+###
+
 ### Instructions
 
 ```
