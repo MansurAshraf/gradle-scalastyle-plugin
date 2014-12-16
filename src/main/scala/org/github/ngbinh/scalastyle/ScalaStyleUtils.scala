@@ -1,5 +1,8 @@
 /*
- * Copyright 2013. Muhammad Ashraf
+ *    Copyright 2014. Binh Nguyen
+ *
+ *    Copyright 2013. Muhammad Ashraf
+ *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
  *    You may obtain a copy of the License at
@@ -13,7 +16,7 @@
  *    limitations under the License.
  */
 
-package org.github.mansur.scalastyle
+package org.github.ngbinh.scalastyle
 
 import org.scalastyle.{Directory, FileSpec}
 import java.io.File
@@ -21,8 +24,10 @@ import java.util.{List => jList}
 import scala.collection.JavaConverters._
 
 /**
+ * @author Binh Nguyen
+ * @since 12/16/2014
  * @author Muhammad Ashraf
- * @since 5/12/13
+ * @since 5/11/13
  */
 class ScalaStyleUtils {
 

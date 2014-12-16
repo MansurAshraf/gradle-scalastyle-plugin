@@ -4,9 +4,9 @@
 
 ```
 maven repo: http://dl.bintray.com/releashaus/release
-groupId: org.github.mansur.scalastyle
-artifactId:  gradle-scalastyle-plugin_2.10
-version: 0.5.0
+groupId: org.github.ngbinh.scalastyle
+artifactId:  gradle-scalastyle-plugin_2.11
+version: 0.6.0
 ```
 
 ```groovy
@@ -16,7 +16,7 @@ version: 0.5.0
 Add following dependencies to your buildScript
 
 ```groovy
-     classpath "org.github.mansur.scalastyle:gradle-scalastyle-plugin_2.10:0.5.0"
+     classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.6.0"
 ```
 
 Configure the plugin
@@ -57,7 +57,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.github.mansur.scalastyle:gradle-scalastyle-plugin_2.10:0.5.0'
+    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.10:0.5.0'
   }
 
 }

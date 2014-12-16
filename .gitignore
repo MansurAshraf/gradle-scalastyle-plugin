@@ -72,3 +72,4 @@ project/boot/
 project/plugins/project/
 
 !gradle/wrapper/gradle-wrapper.jar
+gradle.properties
