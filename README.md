@@ -3,10 +3,10 @@
 ### Instructions
 
 ```
-maven repo: http://dl.bintray.com/releashaus/release
+maven repo: http://dl.bintray.com/ngbinh/maven
 groupId: org.github.ngbinh.scalastyle
 artifactId:  gradle-scalastyle-plugin_2.11
-version: 0.5.1
+version: 0.6.0
 ```
 
 ```groovy
