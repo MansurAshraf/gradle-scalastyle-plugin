@@ -16,7 +16,7 @@ version: 0.6.0
 Add following dependencies to your buildScript
 
 ```groovy
-     classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.5.1"
+     classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.6.0"
 ```
 
 Configure the plugin
@@ -57,7 +57,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.5.1'
+    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.6.0'
   }
 
 }
