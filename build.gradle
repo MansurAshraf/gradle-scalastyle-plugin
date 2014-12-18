@@ -53,7 +53,6 @@ subprojects {
 
   versions.scalaDist = scalaDist
   versions.scalaStyle = "0.6.0"
-  versions.scala = "2.11.4"
   versions.junit = "4.11"
 
   repositories {
@@ -65,11 +64,7 @@ subprojects {
       compile gradleApi()
       compile localGroovy()
 
-      runtime "org.scalastyle:scalastyle_${versions.scalaDist}:${versions.scalaStyle}"
-      runtime "org.scala-lang:scala-library:${versions.scala}"
-
       compile "org.scalastyle:scalastyle_${versions.scalaDist}:${versions.scalaStyle}"
-      compile "org.scala-lang:scala-library:${versions.scala}"
       testCompile 'junit:junit:${versions.junit}'
   }
 
