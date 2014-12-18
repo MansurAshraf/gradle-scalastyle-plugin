@@ -30,8 +30,6 @@ import scala.collection.JavaConverters._
  * @since 5/11/13
  */
 class ScalaStyleUtils {
-
-
   def getFilesToProcess(sourceFiles: jList[File], testFiles: jList[File], inputEncoding: String, includeTestSourceDirectory: Boolean): List[FileSpec] = {
     val sd = getFiles("sourceDirectory", asScalaBufferConverter(sourceFiles).asScala.toList, inputEncoding)
     val tsd = if (includeTestSourceDirectory) getFiles("testFiles", asScalaBufferConverter(testFiles).asScala.toList, inputEncoding) else Nil

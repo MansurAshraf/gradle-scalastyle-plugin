@@ -67,8 +67,6 @@ class ScalaStyleTask extends SourceTask {
 
                 def outputResult = new TextOutput(config, verbose, quiet).output(messages)
 
-                outputResult.println()
-
                 project.getLogger().debug("Saving to outputFile={}", project.file(outputFile).getCanonicalPath());
                 XmlOutput.save(config, outputFile, outputEncoding, messages)
 
