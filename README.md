@@ -18,17 +18,17 @@ Use `artifactId:  gradle-scalastyle-plugin_2.10` if you want to use with Scala `
 Add following dependencies to your buildScript
 
 ```groovy
-     classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.0"
+  classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.0"
 ```
 
 Configure the plugin
 
 ```groovy
   scalaStyle {
-      configLocation = "/path/to/scalaStyle.xml"
-      includeTestSourceDirectory = true
-      source = "src/main/scala"
-      testSource = "src/test/scala"
+    configLocation = "/path/to/scalaStyle.xml"
+    includeTestSourceDirectory = true
+    source = "src/main/scala"
+    testSource = "src/test/scala"
   }
 
 ```
@@ -36,35 +36,35 @@ Configure the plugin
 Other optional properties are
 
 ```groovy
-        outputFile  //Default => $buildDir/scala_style_result.xml
-        outputEncoding //Default => UTF-8
-        failOnViolation //Default => true
-        failOnWarning //Default => false
-        skip  //Default => false
-        verbose //Default => false
-        quiet //Default => false
-        includeTestSourceDirectory //Default => false
-        inputEncoding //Default => UTF-8
+  outputFile  //Default => $buildDir/scala_style_result.xml
+  outputEncoding //Default => UTF-8
+  failOnViolation //Default => true
+  failOnWarning //Default => false
+  skip  //Default => false
+  verbose //Default => false
+  quiet //Default => false
+  includeTestSourceDirectory //Default => false
+  inputEncoding //Default => UTF-8
 ```
 
 #### Full Buildscript Example
 ```groovy
-apply plugin: 'scalaStyle'
+  apply plugin: 'scalaStyle'
 
-buildscript {
-  repositories {
-    jcenter() // only work after grade 1.7
+  buildscript {
+    repositories {
+      jcenter() // only work after grade 1.7
+    }
+
+    dependencies {
+      classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.0'
+    }
   }
 
-  dependencies {
-    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.0'
+  scalaStyle {
+    configLocation = "mega-project/sub-project/scalastyle_config.xml"
+    includeTestSourceDirectory = true
+    source = "src/main/scala"
+    testSource = "src/test/scala"
   }
-}
-
-scalaStyle {
-  configLocation = "mega-project/sub-project/scalastyle_config.xml"
-  includeTestSourceDirectory = true
-  source = "src/main/scala"
-  testSource = "src/test/scala"
-}
 ```
