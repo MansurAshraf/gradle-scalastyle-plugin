@@ -1,8 +1,6 @@
 /*
  *    Copyright 2014. Binh Nguyen
  *
- *    Copyright 2013. Muhammad Ashraf
- *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
  *    You may obtain a copy of the License at
@@ -15,118 +13,12 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-apply plugin: "java"
-apply plugin: "scala"
-apply plugin: "groovy"
-apply plugin: 'signing' // For pushing to Sonatype OSS Staging repository
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'maven-publish'
+version = projectVersion
+group = projectGroup
 
-version = '0.6.0'
-group = "org.github.ngbinh.scalastyle"
-
-ext {
-    versions = [:]
-}
-
-versions.scalaDist = "2.11"
-versions.scalaStyle = "0.6.0"
-versions.scala = "2.11.4"
-versions.junit = "4.11"
-
-dependencies {
-    runtime "org.scalastyle:scalastyle_${versions.scalaDist}:${versions.scalaStyle}"
-    runtime "org.scala-lang:scala-library:${versions.scala}"
-}
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
-    }
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-dependencies {
-    compile gradleApi()
-    compile localGroovy()
-
-    compile "org.scalastyle:scalastyle_${versions.scalaDist}:${versions.scalaStyle}"
-    compile "org.scala-lang:scala-library:${versions.scala}"
-    testCompile 'junit:junit:${versions.junit}'
-}
-
-compileGroovy.dependsOn(compileScala)
-
-// Required for Sonatype
-task sourcesJar(type: Jar, dependsOn: classes) {
-    from sourceSets.main.allSource
-    classifier "sources"
-    extension "jar"
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    from javadoc.destinationDir
-    classifier "javadoc"
-    extension "jar"
-}
-
-configurations.create("sources")
-configurations.create("javadoc")
-configurations.archives {
-    extendsFrom configurations.sources
-    extendsFrom configurations.javadoc
-}
-
-artifacts {
-    sources(sourcesJar) {
-        type "jar"
-    }
-    javadoc(javadocJar) {
-        type "javadoc"
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-
-            artifact sourcesJar {
-                classifier "sources"
-            }
-
-            artifact javadocJar {
-                classifier "javadoc"
-            }
-        }
-    }
-}
-
-bintray {
-    user = "${bintray_user}"
-    key = "${bintray_key}"
-    publications = ['mavenJava']
-    pkg {
-        repo = 'maven'
-        name = 'gradle-scalastyle-plugin_2.11'
-        desc = 'gradle-scalastyle is a Gradle plugin for running the Scalastyle style checker.'
-        licenses = ['Apache-2.0']
-        labels = [version]
-        desc = 'Gradle plugin for scalaStyle'
-        websiteUrl = 'https://github.com/ngbinh/gradle-scalastyle-plugin'
-        issueTrackerUrl = 'https://github.com/ngbinh/gradle-scalastyle-plugin/issues'
-        vcsUrl = 'https://github.com/ngbinh/gradle-scalastyle-plugin.git'
-        licenses = ['Apache-2.0']
-        publicDownloadNumbers = true
-    }
-}
+// Define projects
+def twoTenProject = project(':gradle-scalastyle-plugin_2.10')
+def twoElevenProject = project(':gradle-scalastyle-plugin_2.11')
 
 task wrapper(type: Wrapper) {
     gradleVersion = "2.2.1"
