@@ -53,15 +53,12 @@ apply plugin: 'scalaStyle'
 
 buildscript {
   repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url "http://dl.bintray.com/ngbinh/maven" }
+    jcenter() // only work after grade 1.7
   }
 
   dependencies {
     classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.0'
   }
-
 }
 
 scalaStyle {
