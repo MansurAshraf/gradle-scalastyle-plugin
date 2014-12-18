@@ -3,7 +3,7 @@
 ### Instructions
 
 ```
-maven repo: http://dl.bintray.com/ngbinh/maven
+maven repo: http://jcenter.bintray.com/
 groupId: org.github.ngbinh.scalastyle
 artifactId:  gradle-scalastyle-plugin_2.11
 version: 0.7.0
