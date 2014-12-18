@@ -6,8 +6,10 @@
 maven repo: http://dl.bintray.com/ngbinh/maven
 groupId: org.github.ngbinh.scalastyle
 artifactId:  gradle-scalastyle-plugin_2.11
-version: 0.6.0
+version: 0.7.0
 ```
+
+Use `artifactId:  gradle-scalastyle-plugin_2.10` if you want to use scala `2.10`
 
 ```groovy
   apply plugin: 'scalaStyle'
@@ -16,7 +18,7 @@ version: 0.6.0
 Add following dependencies to your buildScript
 
 ```groovy
-     classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.6.0"
+     classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.0"
 ```
 
 Configure the plugin
@@ -57,7 +59,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.6.0'
+    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.0'
   }
 
 }
