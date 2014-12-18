@@ -9,7 +9,7 @@ artifactId:  gradle-scalastyle-plugin_2.11
 version: 0.7.0
 ```
 
-Use `artifactId:  gradle-scalastyle-plugin_2.10` if you want to use scala `2.10`
+Use `artifactId:  gradle-scalastyle-plugin_2.10` if you want to use with Scala `2.10`
 
 ```groovy
   apply plugin: 'scalaStyle'
