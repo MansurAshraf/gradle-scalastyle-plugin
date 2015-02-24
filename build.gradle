@@ -44,6 +44,10 @@ subprojects {
   apply plugin: 'com.jfrog.bintray'
   apply plugin: 'maven-publish'
 
+  // JRE 1.6 should work
+  sourceCompatibility = 1.6
+  targetCompatibility = 1.6
+
   version = projectVersion
   group = projectGroup
 
