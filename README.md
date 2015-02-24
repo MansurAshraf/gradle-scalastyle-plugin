@@ -6,7 +6,7 @@
 maven repo: http://jcenter.bintray.com/
 groupId: org.github.ngbinh.scalastyle
 artifactId:  gradle-scalastyle-plugin_2.11
-version: 0.7.1
+version: 0.7.2
 ```
 
 Use `artifactId:  gradle-scalastyle-plugin_2.10` if you want to use with Scala `2.10`
@@ -18,7 +18,7 @@ Use `artifactId:  gradle-scalastyle-plugin_2.10` if you want to use with Scala `
 Add following dependencies to your buildScript
 
 ```groovy
-  classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.1"
+  classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.2"
 ```
 
 Configure the plugin
@@ -53,11 +53,11 @@ Other optional properties are
 
   buildscript {
     repositories {
-      jcenter() // only work after grade 1.7
+      jcenter() // only work after gradle 1.7
     }
 
     dependencies {
-      classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.1'
+      classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.2'
     }
   }
 
