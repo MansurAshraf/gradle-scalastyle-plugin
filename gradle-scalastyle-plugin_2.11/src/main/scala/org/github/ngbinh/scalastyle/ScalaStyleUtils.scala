@@ -37,6 +37,10 @@ class ScalaStyleUtils {
     sd ::: tsd
   }
 
+  def getTestFilesToProcess(testFiles: jList[File], inputEncoding: String, includeTestSourceDirectory: Boolean): List[FileSpec] = {
+    getFiles("testFiles", asScalaBufferConverter(testFiles).asScala.toList, inputEncoding)
+  }
+
   def getFiles(name: String, file: List[File], encoding: String) = {
       Directory.getFiles(Option[String](encoding), file)
   }

@@ -36,6 +36,7 @@ import com.typesafe.config.Config
 class ScalaStyleTask extends SourceTask {
     File buildDirectory
     String configLocation
+    String testConfigLocation
     String outputFile
     String outputEncoding = "UTF-8"
     Boolean failOnViolation = true
@@ -63,6 +64,13 @@ class ScalaStyleTask extends SourceTask {
                 def configuration = ScalastyleConfiguration.readFromXml(configLocation)
                 def fileToProcess = scalaStyleUtils.getFilesToProcess(source.getFiles().toList(), testSourceDir.getFiles().toList(), inputEncoding, includeTestSourceDirectory)
                 def messages = new ScalastyleChecker().checkFiles(configuration, fileToProcess)
+
+                def testConfiguration = ScalastyleConfiguration.readFromXml(testConfigLocation)
+                if (testConfiguration != null) {
+                    def testFilesToProcess = scalaStyleUtils.getFilesToProcess(source.getFiles().toList(), testSourceDir.getFiles().toList(), inputEncoding, includeTestSourceDirectory)
+                    messages.addAll(new ScalastyleChecker().checkFiles(testConfiguration, testFilesToProcess))
+                }
+
                 def config = ConfigFactory.load()
 
                 def outputResult = new TextOutput(config, verbose, quiet).output(messages)
@@ -116,6 +124,10 @@ class ScalaStyleTask extends SourceTask {
             testSourceDir = project.fileTree(project.projectDir.absolutePath + "/" + testSource)
         }
 
+        if (testConfigLocation != null && !new File(testConfigLocation).exists()) {
+            throw new Exception("testConfigLocation " + testConfigLocation + " does not exist")
+        }
+
         if (!new File(configLocation).exists()) {
             throw new Exception("configLocation " + configLocation + " does not exist")
         }
@@ -135,6 +147,7 @@ class ScalaStyleTask extends SourceTask {
 
         if (verbose) {
             project.getLogger().info("configLocation: {}", configLocation)
+            project.getLogger().info("testConfigLocation: {}", testConfigLocation)
             project.getLogger().info("buildDirectory: {}", buildDirectory)
             project.getLogger().info("outputFile: {}", outputFile)
             project.getLogger().info("outputEncoding: {}", outputEncoding)
