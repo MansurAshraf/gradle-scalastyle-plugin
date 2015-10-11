@@ -1,5 +1,7 @@
 # Scala Style Gradle Plugin
 
+[![Build Status](https://travis-ci.org/alenkacz/gradle-scalastyle-plugin.svg?branch=master)](https://travis-ci.org/alenkacz/gradle-scalastyle-plugin)
+
 ### Instructions
 
 ```
@@ -44,6 +46,7 @@ Other optional properties are
   verbose //Default => false
   quiet //Default => false
   includeTestSourceDirectory //Default => false
+  testConfigLocation //Separate configuration file to be used for test sources
   inputEncoding //Default => UTF-8
 ```
 
