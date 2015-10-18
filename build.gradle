@@ -126,8 +126,8 @@ subprojects {
 
   bintray {
 
-      user = project.hasProperty('bintray_user') ? project.bintray_user : 'NotGonnaWork'
-      key = project.hasProperty('bintray_key') ? project.bintray_key : 'NotGonnaWork'
+      user = project.hasProperty('bintray_user') ? project.bintray_user : System.getenv('BINTRAY_USER')
+      key = project.hasProperty('bintray_key') ? project.bintray_key : System.getenv('BINTRAY_API_KEY')
 
       publications = ['mavenJava']
       pkg {
