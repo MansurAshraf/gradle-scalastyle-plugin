@@ -34,7 +34,7 @@ twoTenProject.ext.scalaDist = "2.10"
 twoElevenProject.ext.scalaDist = "2.11"
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.2.1"
+    gradleVersion = "2.7"
 }
 
 subprojects {
