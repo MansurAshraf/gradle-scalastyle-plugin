@@ -17,9 +17,10 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
-    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.3.1"
 }
 
 version = projectVersion
@@ -56,7 +57,7 @@ subprojects {
   }
 
   versions.scalaDist = scalaDist
-  versions.scalaStyle = "0.6.0"
+  versions.scalaStyle = "0.7.0"
   versions.junit = "4.11"
 
   repositories {
