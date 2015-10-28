@@ -1,4 +1,23 @@
 apply plugin: 'scala'
+apply plugin: 'scalaStyle'
+
+buildscript {
+  repositories {
+    jcenter() // only work after gradle 1.7
+    mavenLocal()
+  }
+
+  dependencies {
+    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.8.1-SNAPSHOT'
+  }
+}
+
+scalaStyle {
+  configLocation = "scalastyle_config.xml"
+  // includeTestSourceDirectory = true
+  source = "src/main/scala"
+  // testSource = "src/test/scala"
+}
 
 repositories {
     mavenCentral()
