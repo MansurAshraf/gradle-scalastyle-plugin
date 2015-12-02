@@ -8,7 +8,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.8.1-SNAPSHOT'
+    classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.8.3'
   }
 }
 
@@ -17,6 +17,7 @@ scalaStyle {
   // includeTestSourceDirectory = true
   source = "src/main/scala"
   // testSource = "src/test/scala"
+  verbose = false
 }
 
 repositories {

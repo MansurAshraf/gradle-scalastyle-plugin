@@ -18,7 +18,11 @@
 
 package org.github.ngbinh.scalastyle
 
-import org.scalastyle.{Directory, FileSpec}
+import org.scalastyle.{Directory, FileSpec, Message}
+import org.scalastyle.ScalastyleChecker
+import org.scalastyle.ScalastyleConfiguration
+import com.typesafe.config.ConfigFactory
+import com.typesafe.config.Config
 import java.io.File
 import java.util.{List => jList}
 import scala.collection.JavaConverters._
@@ -30,8 +34,6 @@ import scala.collection.JavaConverters._
  * @since 5/11/13
  */
 class ScalaStyleUtils {
-
-
   def getFilesToProcess(sourceFiles: jList[File], testFiles: jList[File], inputEncoding: String, includeTestSourceDirectory: Boolean): List[FileSpec] = {
     val sd = getFiles("sourceDirectory", asScalaBufferConverter(sourceFiles).asScala.toList, inputEncoding)
     val tsd = if (includeTestSourceDirectory) getFiles("testFiles", asScalaBufferConverter(testFiles).asScala.toList, inputEncoding) else Nil
@@ -48,4 +50,12 @@ class ScalaStyleUtils {
   }
 
   def isDirectory(file: File) = file != null && file.exists() && file.isDirectory
+
+  def checkFiles(configuration: ScalastyleConfiguration, files: List[FileSpec]): List[Message[FileSpec]] = {
+    new ScalastyleChecker(Some(this.getClass().getClassLoader())).checkFiles(configuration, files)
+  }
+
+  def configFactory(): Config = {
+    ConfigFactory.load(this.getClass().getClassLoader())
+  }
 }

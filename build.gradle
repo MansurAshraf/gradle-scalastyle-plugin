@@ -57,7 +57,7 @@ subprojects {
   }
 
   versions.scalaDist = scalaDist
-  versions.scalaStyle = "0.7.0"
+  versions.scalaStyle = "0.8.0"
   versions.junit = "4.11"
 
   repositories {
