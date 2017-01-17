@@ -20,13 +20,9 @@ package org.github.ngbinh.scalastyle
 import org.gradle.api.file.FileTree
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
-import org.scalastyle.ScalastyleChecker
 import org.scalastyle.ScalastyleConfiguration
 import org.scalastyle.TextOutput
 import org.scalastyle.XmlOutput
-import com.typesafe.config.ConfigFactory
-import com.typesafe.config.Config
-
 /**
  * @author Binh Nguyen
  * @since 12/16/2014
@@ -68,7 +64,7 @@ class ScalaStyleTask extends SourceTask {
                 if (testConfigLocation != null) {
                   def testConfiguration = ScalastyleConfiguration.readFromXml(testConfigLocation)
                   if (testConfiguration != null) {
-                      def testFilesToProcess = scalaStyleUtils.getTestFilesToProcess(source.getFiles().toList(), testSourceDir.getFiles().toList(), inputEncoding, includeTestSourceDirectory)
+                      def testFilesToProcess = scalaStyleUtils.getTestFilesToProcess(testSourceDir.getFiles().toList(), inputEncoding)
                       messages.addAll(scalaStyleUtils.checkFiles(testConfiguration, testFilesToProcess))
                   }
                 }
@@ -120,7 +116,7 @@ class ScalaStyleTask extends SourceTask {
             throw new Exception("Specify Scala source set")
         }
 
-        if (includeTestSourceDirectory && testSource == null) {
+        if (testSource == null) {
             testSourceDir = project.fileTree(project.projectDir.absolutePath + "/src/test/scala")
         } else {
             testSourceDir = project.fileTree(project.projectDir.absolutePath + "/" + testSource)
