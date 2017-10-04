@@ -41,7 +41,7 @@ class ScalaStyleUtils {
     sd ::: tsd
   }
 
-  def getTestFilesToProcess(testFiles: jList[File], inputEncoding: String, includeTestSourceDirectory: Boolean): List[FileSpec] = {
+  def getTestFilesToProcess(testFiles: jList[File], inputEncoding: String): List[FileSpec] = {
     getFiles("testFiles", asScalaBufferConverter(testFiles).asScala.toList, inputEncoding)
   }
 
