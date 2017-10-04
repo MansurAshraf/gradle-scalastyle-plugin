@@ -15,7 +15,25 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+package org.github.ngbinh.scalastyle
 
-rootProject.name = projectName
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 
-include 'gradle-scalastyle-plugin_2.10', 'gradle-scalastyle-plugin_2.11', 'gradle-scalastyle-plugin_2.12'
+/**
+ * @author Binh Nguyen
+ * @since 12/16/2014
+ * @author Muhammad Ashraf
+ * @since 5/11/13
+ */
+class ScalaStylePlugin implements Plugin<Project> {
+    void apply(Project project) {
+        project.configurations.create("scalaStyle")
+                .setVisible(false)
+                .setTransitive(true)
+                .setDescription('Scala Style libraries to be used for this project.')
+
+        project.task(type: ScalaStyleTask, 'scalaStyle')
+        project.tasks.scalaStyle.outputs.upToDateWhen { false }
+    }
+}

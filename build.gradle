@@ -29,9 +29,11 @@ group = projectGroup
 // Define projects
 def twoTenProject = project(':gradle-scalastyle-plugin_2.10')
 def twoElevenProject = project(':gradle-scalastyle-plugin_2.11')
+def twoTwelveProject = project(':gradle-scalastyle-plugin_2.12')
 
 twoTenProject.ext.scalaDist = "2.10"
 twoElevenProject.ext.scalaDist = "2.11"
+twoTwelveProject.ext.scalaDist = "2.12"
 
 task wrapper(type: Wrapper) {
     gradleVersion = "3.0"
@@ -57,7 +59,7 @@ subprojects {
   }
 
   versions.scalaDist = scalaDist
-  versions.scalaStyle = "0.8.0"
+  versions.scalaStyle = "1.0.0"
   versions.junit = "4.11"
 
   repositories {
