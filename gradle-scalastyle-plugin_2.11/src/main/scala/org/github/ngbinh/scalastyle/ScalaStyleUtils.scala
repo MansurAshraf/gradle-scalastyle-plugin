@@ -51,8 +51,8 @@ class ScalaStyleUtils {
 
   def isDirectory(file: File) = file != null && file.exists() && file.isDirectory
 
-  def checkFiles(configuration: ScalastyleConfiguration, files: List[FileSpec]): List[Message[FileSpec]] = {
-    new ScalastyleChecker(Some(this.getClass().getClassLoader())).checkFiles(configuration, files)
+  def checkFiles(configuration: ScalastyleConfiguration, files: List[FileSpec]): jList[Message[FileSpec]] = {
+    new ScalastyleChecker(Some(this.getClass().getClassLoader())).checkFiles(configuration, files).toBuffer.asJava
   }
 
   def configFactory(): Config = {
